@@ -24,7 +24,8 @@ export type Image = {
 
 export type Sounds = {
   id: number;
-  xeno_id: number;
+  // xeno_id: number;
+  url:string;
   author: string;
 };
 

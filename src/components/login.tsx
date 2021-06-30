@@ -18,7 +18,12 @@ export default function Login() {
                 id: 1,
                 active: true,
                 name: "common",
-                spp: [{ id: 1, genus: "a", species: "b", score: 1 }],
+                spp: [
+                  { id: 1, genus: "a", species: "b", score: 1 },
+                  { id: 2, genus: "c", species: "d", score: 1 },
+                  { id: 3, genus: "e", species: "f", score: 2 },
+                  { id: 4, genus: "g", species: "h", score: 3 },
+                ],
               },
             ],
             name: "Pedro",

@@ -9,10 +9,12 @@ import { useContext } from "react";
 import Entry from "../components/entry";
 import Login from "../components/login";
 import Decks from "../components/decks";
+import Loading from "../components/loading"
+import Game from "../components/game"
 import { Context, contextType } from "../context";
 
 export const SaltatorRouter = () => {
-  const { userInfo } = useContext(Context) as contextType;
+  const { userInfo, deckID, loaded_sounds } = useContext(Context) as contextType;
   return (
     <Router>
       <Switch>
@@ -20,7 +22,18 @@ export const SaltatorRouter = () => {
           {userInfo ? <Redirect to="/decks" /> : <Login />}{" "}
         </Route>
         <Route path="/decks">
-          {userInfo ? <Decks /> : <Redirect to="/login" />}{" "}
+          {userInfo ? (
+            deckID ? (
+              <Redirect push={false} to="/loading"></Redirect>
+            ) : (
+              <Decks />
+            )
+          ) : (
+            <Redirect to="/login" />
+          )}{" "}
+        </Route>
+        <Route path="/loading">
+          {loaded_sounds>4 ?<Game/>:<Loading/>}
         </Route>
         <Route path="/">
           <Entry />

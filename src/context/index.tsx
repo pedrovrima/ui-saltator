@@ -4,18 +4,22 @@ import { Howl, Howler } from "howler";
 import { url } from "inspector";
 
 export type contextType = {
-  deckID?: number,
-  setdeckID: (id: number) =>void,
-  addPoints?: Function,
-  setUserInfo: (user:User)=>void,
-  userInfo?: User,
-  sounds?: any,
-  loaded_sounds?: any,
-  songOrder?: any,
-}
+  deckID?: number;
+  setdeckID: (id: number) => void;
+  addPoints?: Function;
+  setUserInfo: (user: User) => void;
+  userInfo?: User;
+  sounds?: any;
+  loaded_sounds: number;
+  songOrder?: any;
+  studySpp:StateSpecies[];
+  setStudySpp: (spp: StateSpecies[]) => void,
+  total_played:number; 
+  setPlayed: (num: number)=>void
 
+};
 
-export const Context = createContext<contextType| null>(null)
+export const Context = createContext<contextType | null>(null);
 
 interface SoundList extends Sounds {
   species_id: number;
@@ -29,22 +33,18 @@ interface StateSpecies extends Species {
 // user info
 
 const createHowl = (
-  urls: string[],
-  this_url: number,
-  setSound: Function,
-  setLoadedSounds: Function
+  this_url: string,
+  setLoadedSounds: Function,
+  loaded_sounds: number
 ) => {
-  const sounds = new Howl({
-    src: urls[this_url],
+  const sound = new Howl({
+    src: [this_url],
     onload: () => {
-      if (urls[this_url + 1]) {
-        createHowl(urls, this_url + 1, setSound, setLoadedSounds);
-      }
+      setLoadedSounds(loaded_sounds + 1);
     },
   });
 
-  setSound(sounds);
-  setLoadedSounds(this_url + 1);
+  return sound;
 };
 
 export const ContextProvider = (props: { children: ReactNode }) => {
@@ -52,8 +52,10 @@ export const ContextProvider = (props: { children: ReactNode }) => {
   const [deckID, setdeckID] = useState<number>();
   const [studySpp, setStudySpp] = useState<StateSpecies[]>();
   const [songOrder, setSongOrder] = useState<SoundList[]>();
-  const [sounds, setSounds] = useState();
+  const [sounds, setSounds] = useState<any[]>();
   const [loaded_sounds, setLoadedSounds] = useState<number>(0);
+  const [total_played, setPlayed] = useState<number>(0);
+
 
   const addPoints = (spp_id: number, points: number) => {
     if (studySpp) {
@@ -89,10 +91,18 @@ export const ContextProvider = (props: { children: ReactNode }) => {
 
   useEffect(() => {
     if (songOrder) {
-      const sound_urls = songOrder.map((song) => `url${song.xeno_id}`);
-      createHowl(sound_urls, loaded_sounds, setSounds, setLoadedSounds);
+      const sound_urls = songOrder.map((song) => song.url);
+      if (sound_urls[loaded_sounds]) {
+        const this_url = sound_urls[loaded_sounds];
+        const sound = createHowl(this_url, setLoadedSounds, loaded_sounds);
+        if (sounds) {
+          setSounds([...sounds, sound]);
+        } else {
+          setSounds([sound]);
+        }
+      }
     }
-  }, [songOrder, sounds]);
+  }, [songOrder, loaded_sounds]);
 
   const value = {
     deckID,
@@ -103,6 +113,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     sounds,
     loaded_sounds,
     songOrder,
+    setStudySpp,
   };
-  return (<Context.Provider value={value}>{props.children}</Context.Provider>);
+  return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };
