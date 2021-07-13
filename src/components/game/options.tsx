@@ -8,7 +8,10 @@ type optionInfo = {
 };
 
 type optionProps = {
-  options: optionInfo[];
+  options?: optionInfo[];
+  answered: boolean;
+  setAnswered: Function;
+
 };
 
 type optionComponentType = {
@@ -41,11 +44,11 @@ const OptionComponent = (props: optionComponentType) => {
 };
 
 const Options = (props: optionProps) => {
-  const { options } = props;
-  const [answered, setAnswered] = useState(false);
+  console.log(props)
+  const { options, answered, setAnswered } = props;
   return (
     <div>
-      {options.map((option, i) => {
+      {options?.map((option, i) => {
         return (
           <OptionComponent
             key={i}
