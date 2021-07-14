@@ -16,43 +16,39 @@ type optionInfo = {
   correct: boolean;
   pt_name: string;
 };
-type OptionsType =   optionInfo[];
-;
-
+type OptionsType = optionInfo[];
 type OptionGroups = OptionsType[];
 
-const createOptions = (this_id: number, spp_list: Species[]):OptionsType => {
-    const spp = spp_list.reduce(
-      (data: any, spp: Species) => {
-        if (spp.id === this_id) {
-          return { ...data, this_species: { ...spp, correct: true } };
-        }
-        return {
-          ...data,
-          other_species: [
-            ...data.other_species,
-            { ...spp, random: Math.random(), correct: false },
-          ],
-        };
-      },
-      { this_species: {}, other_species: [] }
-    );
+const createOptions = (this_id: number, spp_list: Species[]): OptionsType => {
+  const spp = spp_list.reduce(
+    (data: any, spp: Species) => {
+      if (spp.id === this_id) {
+        return { ...data, this_species: { ...spp, correct: true } };
+      }
+      return {
+        ...data,
+        other_species: [
+          ...data.other_species,
+          { ...spp, random: Math.random(), correct: false },
+        ],
+      };
+    },
+    { this_species: {}, other_species: [] }
+  );
 
-    const selected_species = spp.other_species
-      .sort((a: other_species, b: other_species): number => a.random - b.random)
-      .splice(0, 2);
+  const selected_species = spp.other_species
+    .sort((a: other_species, b: other_species): number => a.random - b.random)
+    .splice(0, 2);
 
-    console.log(spp.this_species);
+  console.log(spp.this_species);
 
-  
   return [spp.this_species, ...selected_species];
-
 };
 
 export type contextType = {
   deckID?: number;
   setdeckID: (id: number) => void;
-  addPoints?: Function;
+  addPoints: (spp_id: number, points: number) => void;
   setUserInfo: (user: User) => void;
   userInfo?: User;
   sounds?: any;
@@ -109,9 +105,9 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     if (studySpp) {
       const otherSpp = studySpp.filter((spp) => spp.id !== spp_id);
       const thisSpp = studySpp.filter((spp) => spp.id === spp_id)[0];
-      if (thisSpp.points) {
-        thisSpp.points = thisSpp.points + points;
-      }
+      thisSpp.score = thisSpp.score + points;
+      console.log(thisSpp);
+      console.log(otherSpp);
       setStudySpp([...otherSpp, thisSpp]);
     }
   };
@@ -157,13 +153,14 @@ export const ContextProvider = (props: { children: ReactNode }) => {
   }, [songOrder, loaded_sounds]);
 
   useEffect(() => {
-    if (songOrder && this_deck) {
-      const the_options:OptionGroups = songOrder.map((sng, i):OptionsType => {
+    if (songOrder && this_deck && !options) {
+      const the_options: OptionGroups = songOrder.map((sng, i): OptionsType => {
         const options = createOptions(sng.species_id, this_deck.spp);
+        console.log(i)
         return options;
       });
 
-      console.log(the_options)
+      console.log(the_options);
 
       setOptions(the_options);
     }
@@ -182,7 +179,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     total_played,
     setPlayed,
     this_deck,
-    options
+    options,
   };
   return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };
