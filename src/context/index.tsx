@@ -122,7 +122,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
   }, [deckID]);
 
   useEffect(() => {
-    if (studySpp) {
+    if (studySpp && !songOrder) {
       const sounds = studySpp
         .map((spp) =>
           spp.sounds
@@ -156,13 +156,13 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     if (songOrder && this_deck && !options) {
       const the_options: OptionGroups = songOrder.map((sng, i): OptionsType => {
         const options = createOptions(sng.species_id, this_deck.spp);
-        console.log(i)
+        console.log(options[0],sng.species_id,i)
         return options;
       });
 
-      console.log(the_options);
 
       setOptions(the_options);
+      console.log(the_options)
     }
   }, [songOrder]);
   const value = {

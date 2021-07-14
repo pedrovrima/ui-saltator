@@ -11,6 +11,7 @@ type optionProps = {
   options?: optionInfo[];
   answered: boolean;
   setAnswered: Function;
+  score_function: Function
 
 };
 
@@ -18,10 +19,12 @@ type optionComponentType = {
   optionInfo: optionInfo;
   answered: boolean;
   setAnswered: Function;
+  score_function: Function
+
 };
 
 const OptionComponent = (props: optionComponentType) => {
-  const { optionInfo, answered, setAnswered } = props;
+  const { optionInfo, answered, setAnswered,score_function } = props;
   const { genus, species, correct, pt_name } = optionInfo;
   const [chosen, setChosen] = useState(false);
 
@@ -29,12 +32,14 @@ const OptionComponent = (props: optionComponentType) => {
 
   return (
     <button
+    style={{backgroundColor:`${answered && correct?"green":answered && chosen?"red":""}`}}
       data-testid={`${genus} ${species}`}
       key={`${genus} ${species}`}
       disabled={answered}
       onClick={() => {
         setChosen(true);
         setAnswered(true);
+        score_function(correct);
       }}
     >
       <h1>{pt_name}</h1>
@@ -44,13 +49,13 @@ const OptionComponent = (props: optionComponentType) => {
 };
 
 const Options = (props: optionProps) => {
-  console.log(props)
-  const { options, answered, setAnswered } = props;
+  const { options,score_function, answered, setAnswered } = props;
   return (
     <div>
       {options?.map((option, i) => {
         return (
           <OptionComponent
+          score_function={score_function}
             key={i}
             optionInfo={option}
             answered={answered}

@@ -5,7 +5,6 @@ import Options from "./options";
 import SoundButtons from "./sound_buttons";
 import { Species } from "../../types";
 
-
 export default function GamePart(props: any) {
   const { position } = props;
   const {
@@ -14,20 +13,22 @@ export default function GamePart(props: any) {
     setPlayed,
     songOrder,
     this_deck,
-    options
+    options,
+    addPoints,
   } = useContext(Context) as contextType;
 
   const [answered, setAnswered] = useState(false);
   const [sound, setSound] = useState(sounds[position]);
-
+  const setScore = (correct: boolean): void => {
+    const points = correct ? 1 : -1;
+    addPoints(songOrder[total_played].species_id, points);
+  };
 
   useEffect(() => {
-    if (position===total_played) {
+    if (position === total_played) {
       sound.play();
-      console.log(sound.playing(),position)
-
+      console.log(sound.playing(), position);
     }
-
   }, [total_played]);
 
   return (
@@ -36,7 +37,8 @@ export default function GamePart(props: any) {
       {/* play/pause and  replay button*/}
       <SoundButtons sound={sound}></SoundButtons>
       <Options
-        options={options?options[position]:undefined}
+        score_function={setScore}
+        options={options ? options[position] : undefined}
         answered={answered}
         setAnswered={setAnswered}
       ></Options>
