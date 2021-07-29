@@ -23,7 +23,7 @@ function DeckCard(props: Deck & { setdeckID?: (id: number) => void }) {
   const { id, name, spp, active, setdeckID } = props;
 
   const percentage_complete =
-    spp.length > 0 ? Math.round(scorePercentage(getScore(spp), 5, 1)) : 0;
+    spp.length > 0 ? Math.round(scorePercentage(getScore(spp), 5, 0)) : 0;
   return (
     <div>
       <h1>{nameMaker(name)}</h1>
