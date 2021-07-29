@@ -24,6 +24,13 @@ export default function GamePart(props: any) {
     addPoints(songOrder[total_played].species_id, points);
   };
 
+  useEffect(() =>{
+    if(!sound && sounds[position]){
+      setSound(sounds[position])
+      
+    }
+  },[sounds])
+
   useEffect(() => {
     if (position === total_played) {
       sound.play();

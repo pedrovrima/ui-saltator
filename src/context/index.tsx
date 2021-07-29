@@ -4,6 +4,7 @@ import { Howl, Howler } from "howler";
 import { url } from "inspector";
 import options from "../components/game/options";
 import Options from "../components/game/options";
+import getUser from "../api/user";
 
 type random = {
   random: number;
@@ -60,6 +61,7 @@ export type contextType = {
   setPlayed: (num: number) => void;
   this_deck?: Deck;
   options?: OptionGroups;
+  setUserId: (id: number) => void;
 };
 
 export const Context = createContext<contextType | null>(null);
@@ -91,6 +93,7 @@ const createHowl = (
 };
 
 export const ContextProvider = (props: { children: ReactNode }) => {
+  const [userId, setUserId] = useState<number>();
   const [userInfo, setUserInfo] = useState<User>();
   const [deckID, setdeckID] = useState<number>();
   const [studySpp, setStudySpp] = useState<StateSpecies[]>();
@@ -111,6 +114,26 @@ export const ContextProvider = (props: { children: ReactNode }) => {
       setStudySpp([...otherSpp, thisSpp]);
     }
   };
+
+  const userSetter = async (id: number) => {
+    const user = await getUser(id);
+    console.log(user)
+    setUserInfo(user);
+  };
+
+  useEffect(() => {
+    if (userId) {
+      userSetter(userId);
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (total_played === songOrder?.length) {
+      // create object to send and use on end
+      // send
+      //set sent and show end
+    }
+  }, [total_played]);
 
   useEffect(() => {
     // write function to get spp from deckID
@@ -156,13 +179,12 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     if (songOrder && this_deck && !options) {
       const the_options: OptionGroups = songOrder.map((sng, i): OptionsType => {
         const options = createOptions(sng.species_id, this_deck.spp);
-        console.log(options[0],sng.species_id,i)
+        console.log(options[0], sng.species_id, i);
         return options;
       });
 
-
       setOptions(the_options);
-      console.log(the_options)
+      console.log(the_options);
     }
   }, [songOrder]);
   const value = {
@@ -180,6 +202,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     setPlayed,
     this_deck,
     options,
+    setUserId,
   };
   return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };

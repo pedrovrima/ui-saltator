@@ -6,6 +6,7 @@ export default function Loading() {
   useEffect(() => {
     setStudySpp([
       {
+        points: 2,
         score: 0,
         id: 1,
         genus: "a",
@@ -29,6 +30,7 @@ export default function Loading() {
         ],
       },
       {
+        points: 3,
         score: 0,
         id: 2,
         genus: "c",
@@ -53,6 +55,7 @@ export default function Loading() {
       },
       {
         score: 0,
+        points: 0,
         id: 3,
         genus: "e",
         species: "f",
@@ -75,6 +78,7 @@ export default function Loading() {
         ],
       },
       {
+        points: 1,
         score: 0,
         id: 4,
         genus: "g",

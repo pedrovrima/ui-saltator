@@ -11,7 +11,7 @@ export type Species = {
 
 export type User = {
   id: number;
-  email: string;
+  email?: string;
   name: string;
   user_decks: Deck[];
 };
