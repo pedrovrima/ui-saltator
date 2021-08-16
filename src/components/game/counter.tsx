@@ -1,15 +1,16 @@
 type counterType = {
-    total:number,
-    this_position:number
-}
+  total: number;
+  this_position: number;
+};
 
-const Counter = (props:counterType)=>{
-    const {total, this_position} = props
+const Counter = (props: counterType) => {
+  const { total, this_position } = props;
 
-    return(
-        <p>{`${this_position}/${total}`}</p>
-    )
-}
+  return (
+    <div className="w-full flex justify-center">
+      <p className="text-lg font-bold">{`${this_position}/${total}`}</p>
+    </div>
+  );
+};
 
-
-export default Counter
+export default Counter;

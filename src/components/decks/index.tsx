@@ -14,6 +14,7 @@ export default function DeckChooser() {
       <h1>Decks</h1>
       <div>
         {user_decks.map((deck) => {
+          
           return <DeckCard  setdeckID={setdeckID} {...deck} />;
         })}
 

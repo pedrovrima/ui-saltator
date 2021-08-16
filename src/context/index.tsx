@@ -5,7 +5,7 @@ import { url } from "inspector";
 import options from "../components/game/options";
 import Options from "../components/game/options";
 import getUser from "../api/user";
-
+import getSpp from "../api/deck";
 type random = {
   random: number;
 };
@@ -15,7 +15,7 @@ type optionInfo = {
   genus: string;
   species: string;
   correct: boolean;
-  pt_name: string;
+  pt_common_name: string;
 };
 type OptionsType = optionInfo[];
 type OptionGroups = OptionsType[];
@@ -71,8 +71,10 @@ interface SoundList extends Sounds {
   random: number;
 }
 
-interface StateSpecies extends Species {
+export interface StateSpecies extends Species {
+  deck_id: number;
   sounds: Sounds[];
+  points: number;
 }
 
 // user info
@@ -82,12 +84,21 @@ const createHowl = (
   setLoadedSounds: Function,
   loaded_sounds: number
 ) => {
-  const sound = new Howl({
-    src: [this_url],
-    onload: () => {
-      setLoadedSounds(loaded_sounds + 1);
-    },
-  });
+  const sound =    new Audio ()
+  sound.crossOrigin="anonymous";
+  sound.src=this_url;
+  console.log(this_url);
+  
+  // const sound =  new Howl({
+  //   html5:false,
+  //   src: ["localhost:4001/xeno/554170/download"],
+  //   onload: () => {
+  //     setLoadedSounds(loaded_sounds + 1);
+  //   },
+  // });
+
+  setLoadedSounds(loaded_sounds + 1)  
+
 
   return sound;
 };
@@ -108,16 +119,14 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     if (studySpp) {
       const otherSpp = studySpp.filter((spp) => spp.id !== spp_id);
       const thisSpp = studySpp.filter((spp) => spp.id === spp_id)[0];
-      thisSpp.score = thisSpp.score + points;
-      console.log(thisSpp);
-      console.log(otherSpp);
+      thisSpp.points = thisSpp.points + points;
       setStudySpp([...otherSpp, thisSpp]);
     }
   };
 
   const userSetter = async (id: number) => {
     const user = await getUser(id);
-    console.log(user)
+    console.log(user);
     setUserInfo(user);
   };
 
@@ -135,13 +144,21 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     }
   }, [total_played]);
 
+  const sppSetter = async (id:number) => {
+    console.log("here")
+    const spp = await getSpp(id);
+    console.log(spp)
+    setStudySpp(spp);
+  };
+
   useEffect(() => {
-    // write function to get spp from deckID
-    // setStudySpp()
+    if(deckID){
+      console.log("here")
+    sppSetter(deckID);
     const use_deck = userInfo?.user_decks?.filter(
       (deck) => deck.id === deckID
     )[0];
-    setThisDeck(use_deck);
+    setThisDeck(use_deck);}
   }, [deckID]);
 
   useEffect(() => {
@@ -162,7 +179,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
 
   useEffect(() => {
     if (songOrder) {
-      const sound_urls = songOrder.map((song) => song.url);
+      const sound_urls = songOrder.map((song) => song.xeno_id);
       if (sound_urls[loaded_sounds]) {
         const this_url = sound_urls[loaded_sounds];
         const sound = createHowl(this_url, setLoadedSounds, loaded_sounds);
@@ -178,8 +195,9 @@ export const ContextProvider = (props: { children: ReactNode }) => {
   useEffect(() => {
     if (songOrder && this_deck && !options) {
       const the_options: OptionGroups = songOrder.map((sng, i): OptionsType => {
+        console.log(sng)
         const options = createOptions(sng.species_id, this_deck.spp);
-        console.log(options[0], sng.species_id, i);
+        // console.log(options[0], sng.species_id, i);
         return options;
       });
 

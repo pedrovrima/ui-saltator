@@ -18,6 +18,7 @@ export const SaltatorRouter = () => {
   const { userInfo, deckID, loaded_sounds, total_played, songOrder } =
     useContext(Context) as contextType;
   return (
+    <div className="w-full">
     <Router>
       <Switch>
         <Route path="/login">
@@ -35,7 +36,7 @@ export const SaltatorRouter = () => {
           )}{" "}
         </Route>
         <Route path="/loading">
-          {loaded_sounds > 4 ? <Redirect to="/game" /> : <Loading />}
+          {loaded_sounds===songOrder?.length ||  loaded_sounds > 4 ? <Redirect to="/game" /> : <Loading />}
         </Route>
         <Route path="/game">
           {total_played === songOrder?.length ?<Redirect to="/end" />  : <Game />}
@@ -48,5 +49,6 @@ export const SaltatorRouter = () => {
         </Route>
       </Switch>
     </Router>
+    </div>
   );
 };

@@ -4,6 +4,7 @@ import { Context, contextType } from "../../context";
 import Options from "./options";
 import SoundButtons from "./sound_buttons";
 import { Species } from "../../types";
+import Figure from "./image"
 
 export default function GamePart(props: any) {
   const { position } = props;
@@ -23,6 +24,8 @@ export default function GamePart(props: any) {
     const points = correct ? 1 : -1;
     addPoints(songOrder[total_played].species_id, points);
   };
+  console.log(sound);
+
 
   useEffect(() =>{
     if(!sound && sounds[position]){
@@ -34,13 +37,13 @@ export default function GamePart(props: any) {
   useEffect(() => {
     if (position === total_played) {
       sound.play();
-      console.log(sound.playing(), position);
+      console.log(sound.paused, position);
     }
   }, [total_played]);
 
   return (
     <div style={{ display: `${total_played === position ? "" : "none"}` }}>
-      {/* image + sound_blob */}
+      <Figure answered={answered}></Figure>
       <SoundButtons sound={sound}></SoundButtons>
       <Options
         score_function={setScore}
@@ -48,18 +51,18 @@ export default function GamePart(props: any) {
         answered={answered}
         setAnswered={setAnswered}
       ></Options>
-      {answered ? (
+      <div className="w-full flex justify-end ">
         <button
+        className={`${answered ? "":"invisible"} border-2  shadow-lg border-emerald-700 px-4 py-2 rounded-md mt-4 text-emerald-700`}
           onClick={() => {
             setPlayed(total_played + 1);
-            sound.stop();
+            sound.pause();
           }}
         >
-          Next
+          Próximo
         </button>
-      ) : (
-        ""
-      )}
+        </div>
+      
     </div>
   );
 }

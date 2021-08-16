@@ -2,7 +2,7 @@ export type Species = {
   id: number;
   genus: string;
   species: string;
-  pt_name?: string;
+  pt_common_name?: string;
   img?: Image[];
   score: number;
   points?: number;
@@ -25,7 +25,7 @@ export type Image = {
 export type Sounds = {
   id: number;
   // xeno_id: number;
-  url:string;
+  xeno_id:string;
   author: string;
 };
 

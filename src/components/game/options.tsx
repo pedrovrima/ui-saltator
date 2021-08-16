@@ -4,7 +4,7 @@ type optionInfo = {
   genus: string;
   species: string;
   correct: boolean;
-  pt_name: string;
+  pt_common_name: string;
 };
 
 type optionProps = {
@@ -25,25 +25,26 @@ type optionComponentType = {
 
 const OptionComponent = (props: optionComponentType) => {
   const { optionInfo, answered, setAnswered,score_function } = props;
-  const { genus, species, correct, pt_name } = optionInfo;
+  const { genus, species, correct, pt_common_name } = optionInfo;
   const [chosen, setChosen] = useState(false);
 
   //Use correct and chosen to define state after clicked
 
   return (
     <button
-    style={{backgroundColor:`${answered && correct?"green":answered && chosen?"red":""}`}}
+    style={{backgroundColor:``}}
       data-testid={`${genus} ${species}`}
       key={`${genus} ${species}`}
       disabled={answered}
+      className={` ${answered && correct?"bg-emerald-300":answered && chosen?"bg-red-300":`bg-gray-50`} p-4  my-2  shadow-lg rounded-lg w-full `}
       onClick={() => {
         setChosen(true);
         setAnswered(true);
         score_function(correct);
       }}
     >
-      <h1>{pt_name}</h1>
-      <h2> {`${genus} ${species}`}</h2>
+      <h1>{pt_common_name}</h1>
+      <h2 className="italic"> {`${genus} ${species}`}</h2>
     </button>
   );
 };

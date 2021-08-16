@@ -6,10 +6,12 @@ const get_user = gql`
       id
       name
       user_decks {
+        id
         active
         name
         deck_species {
           species {
+            id
             genus
             species
           }

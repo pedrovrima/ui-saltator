@@ -21,7 +21,7 @@ const nameMaker = (name: string) => {
 function DeckCard(props: Deck & { setdeckID?: (id: number) => void }) {
   const [showSpecies, setShowSpecies] = useState(false);
   const { id, name, spp, active, setdeckID } = props;
-
+console.log(id)
   const percentage_complete =
     spp.length > 0 ? Math.round(scorePercentage(getScore(spp), 5, 0)) : 0;
   return (

@@ -1,0 +1,44 @@
+import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
+
+const get_spp = gql`
+  query deck($id: ID!) {
+    RandomDeck(id: $id, total: 1) {
+      deck_species {
+        id
+        species {
+          id
+          genus
+          species
+          pt_common_name
+          sounds {
+            species_id
+            author
+            xeno_id
+          }
+        }
+        score
+      }
+    }
+  }
+`;
+
+const client = new ApolloClient({
+  uri: "http://localhost:4001/graphql",
+  cache: new InMemoryCache(),
+});
+
+export default async function GetSpp(id: number) {
+  console.log(client)
+  const result = await client.query({ query: get_spp, variables: { id } });
+  console.log(result);
+  const deck_spp = result.data.RandomDeck.deck_species.map((spp: any) => {
+    return {
+      deck_id:spp.id,
+      ...spp,
+      ...spp.species,
+      points: 0,
+    };
+  });
+  console.log(deck_spp);
+  return deck_spp;
+}

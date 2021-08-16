@@ -2,9 +2,9 @@ import Options from "./options";
 import { render, screen, fireEvent } from "@testing-library/react";
 
 const options = [
-  { genus: "a", species: "b", pt_name: "abb", correct: false },
-  { genus: "a", species: "a", pt_name: "aaa", correct: false },
-  { genus: "a", species: "c", pt_name: "acc", correct: true },
+  { genus: "a", species: "b", pt_common_name: "abb", correct: false },
+  { genus: "a", species: "a", pt_common_name: "aaa", correct: false },
+  { genus: "a", species: "c", pt_common_name: "acc", correct: true },
 ];
 
 test("options", async () => {
