@@ -41,7 +41,6 @@ export default function GamePart(props: any) {
   return (
     <div style={{ display: `${total_played === position ? "" : "none"}` }}>
       {/* image + sound_blob */}
-      {/* play/pause and  replay button*/}
       <SoundButtons sound={sound}></SoundButtons>
       <Options
         score_function={setScore}
