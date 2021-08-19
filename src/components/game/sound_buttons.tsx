@@ -1,43 +1,18 @@
 import { useEffect, useState } from "react";
 import { MdPlayArrow, MdPause, MdReplay } from "react-icons/md";
-
 export default function SoundButtons(props: any) {
   const { sound } = props;
   const [playing, setPlaying] = useState<boolean>(true);
 
-  const audioCtx = new AudioContext();
-  let analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 256; //Size of data array that is returned
+  // const audioCtx = new AudioContext();
 
-  // Add audio elememt to context.
-  let source = audioCtx.createMediaElementSource(sound);
-
-  source.connect(analyser);
-  //this connects our music back to the default output, such as your //speakers
-  source.connect(audioCtx.destination);
-
-  let data = new Uint8Array(analyser.frequencyBinCount);
-
-  setInterval(loopingFunction,1000)
-  // requestAnimationFrame(loopingFunction);
-
-  function loopingFunction() {
-    // requestAnimationFrame(loopingFunction);
-    analyser.getByteFrequencyData(data);
-    // console.log(data)
-
-  }
-
-  useEffect(() => {
-    sound.play();
-  }, []);
 
   return (
     <>
       <div className="flex w-full justify-center items-center">
         <button
           onClick={() => {
-            if (!sound.paused) {
+            if (sound.playing()) {
               sound.pause();
               setPlaying(false);
             } else {
@@ -54,7 +29,7 @@ export default function SoundButtons(props: any) {
         </button>
         <button
           onClick={() => {
-            sound.pause();
+            sound.stop();
             sound.play();
             setPlaying(true);
           }}

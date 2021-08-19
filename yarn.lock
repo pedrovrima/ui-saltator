@@ -1284,6 +1284,11 @@
     "minimatch" "^3.0.4"
     "strip-json-comments" "^3.1.1"
 
+"@georgedoescode/spline@^1.0.1":
+  "integrity" "sha512-TlNv3mkCxNOrbbKBshZbu54Zf9lLh2b7YZdnynDLYnkagTtWt1ERu5+csWnHsA3uCn6P2OmS8MBLGGDLiKxI+A=="
+  "resolved" "https://registry.npmjs.org/@georgedoescode/spline/-/spline-1.0.1.tgz"
+  "version" "1.0.1"
+
 "@graphql-typed-document-node/core@^3.0.0":
   "integrity" "sha512-wYn6r8zVZyQJ6rQaALBEln5B1pzxb9shV5Ef97kTvn6yVGrqyXVnDqnU24MXnFubR+rZjBY9NWuxX3FB2sTsjg=="
   "resolved" "https://registry.npmjs.org/@graphql-typed-document-node/core/-/core-3.1.0.tgz"
@@ -10419,6 +10424,11 @@
   dependencies:
     "is-arrayish" "^0.3.1"
 
+"simplex-noise@^2.4.0":
+  "integrity" "sha512-OjyDWm/QZjVbMrPxDVi9b2as+SeNn9EBXlrWVRlFW+TSyWMSXouDryXkQN0vf5YP+QZKobrmkvx1eQYPLtuqfw=="
+  "resolved" "https://registry.npmjs.org/simplex-noise/-/simplex-noise-2.4.0.tgz"
+  "version" "2.4.0"
+
 "sisteransi@^1.0.5":
   "integrity" "sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg=="
   "resolved" "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz"
@@ -10616,6 +10626,11 @@
     "http-deceiver" "^1.2.7"
     "select-hose" "^2.0.0"
     "spdy-transport" "^3.0.0"
+
+"spline@^0.0.0":
+  "integrity" "sha1-8Zm2gD148ZoAcIuLwc12VlgQYbI="
+  "resolved" "https://registry.npmjs.org/spline/-/spline-0.0.0.tgz"
+  "version" "0.0.0"
 
 "split-string@^3.0.1", "split-string@^3.0.2":
   "integrity" "sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw=="

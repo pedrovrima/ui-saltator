@@ -12,9 +12,9 @@ describe("deck-cards", () => {
 
   test("active deck", async () => {
     render(<DeckCard id={1} name={name} spp={spp} active={true} setdeckID={(id)=>console.log(id)}/>);
-    const button = screen.getByText("Ver espécies");
+    const button = screen.getByText("Espécies");
 
-    expect(screen.getByText("Ver espécies")).toBeInTheDocument();
+    expect(screen.getByText("Espécies")).toBeInTheDocument();
     expect(screen.getByText("Espécies comuns")).toBeInTheDocument();
     expect(screen.getByText("50% completos")).toBeInTheDocument();
     expect(screen.getByText("50% completos")).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("deck-cards", () => {
 
   test("inactive deck", async () => {
     render(<DeckCard id={1} name={name} spp={spp} active={false} />);
-    expect(screen.queryByText("Ver espécies")).toBeNull();
+    expect(screen.queryByText("Espécies")).toBeNull();
     expect(
       screen.queryByText(
         "Complete 75% do nível anterior para desbloquear este nível"

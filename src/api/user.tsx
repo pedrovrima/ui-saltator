@@ -14,6 +14,7 @@ const get_user = gql`
             id
             genus
             species
+            pt_common_name
           }
           score
         }

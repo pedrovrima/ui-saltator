@@ -18,7 +18,7 @@ export const SaltatorRouter = () => {
   const { userInfo, deckID, loaded_sounds, total_played, songOrder } =
     useContext(Context) as contextType;
   return (
-    <div className="w-full">
+    <div className="w-full min-h-screen">
     <Router>
       <Switch>
         <Route path="/login">

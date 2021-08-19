@@ -2,7 +2,6 @@ import { useState, useEffect, createContext, ReactNode } from "react";
 import type { User, Species, Sounds, Deck } from "../types";
 import { Howl, Howler } from "howler";
 import { url } from "inspector";
-import options from "../components/game/options";
 import Options from "../components/game/options";
 import getUser from "../api/user";
 import getSpp from "../api/deck";
@@ -84,20 +83,21 @@ const createHowl = (
   setLoadedSounds: Function,
   loaded_sounds: number
 ) => {
-  const sound =    new Audio ()
-  sound.crossOrigin="anonymous";
-  sound.src=this_url;
-  console.log(this_url);
+  // const sound =    new Audio ()
+  // sound.crossOrigin="anonymous";
+  // sound.src=this_url;
+  // console.log(this_url);
   
-  // const sound =  new Howl({
-  //   html5:false,
-  //   src: ["localhost:4001/xeno/554170/download"],
-  //   onload: () => {
-  //     setLoadedSounds(loaded_sounds + 1);
-  //   },
-  // });
+  const sound =  new Howl({
+    html5:false,
+    src: [this_url],
+    onload: () => {
+      setLoadedSounds(loaded_sounds + 1);
+    },
+  });
 
-  setLoadedSounds(loaded_sounds + 1)  
+  console.log(this_url)
+  // setLoadedSounds(loaded_sounds + 1)  
 
 
   return sound;
