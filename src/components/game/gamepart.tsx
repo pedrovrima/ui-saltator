@@ -51,7 +51,7 @@ export default function GamePart(props: any) {
       <div       className="grid sm:grid-cols-2"
 >
       <div>
-        <Figure answered={answered} position={position} ></Figure>
+        <Figure answered={answered} position={position} url={songOrder[total_played].image.url}></Figure>
         <SoundButtons sound={sound}></SoundButtons>
       </div>
       <div>
@@ -71,7 +71,7 @@ export default function GamePart(props: any) {
           <div className="flex text-xs sm:text-md  flex-col">
             <p>{`Gravação: ${toTitleCase(songOrder[total_played].author)}`}</p>
             <p>{`Fotografia: ${toTitleCase(
-              songOrder[total_played].author
+              songOrder[total_played].image.author
             )}`}</p>
           </div>
           <div className="flex items-end justify-end">

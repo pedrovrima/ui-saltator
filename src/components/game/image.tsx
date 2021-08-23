@@ -3,7 +3,7 @@ import { Howler } from "howler";
 import { useRef, useState, useEffect } from "react";
 
 export default function Figure(props: any) {
-  const { answered, position,path } = props;
+  const { answered, position,url } = props;
   // const [soundData,setSoundData] = useState<Uint8Array>()
   const svg = useRef(null);
   // if(position === 0){
@@ -28,8 +28,7 @@ export default function Figure(props: any) {
   //     animate(svg.current,soundData,32)
   //   }
   // },[soundData])
-
-  console.log(path)
+console.log(url)
   return (
     <div className="w-full flex justify-center my-4 sm:my-8">
       {/* <div className="absolute h-64  w-64 z-0 ">
@@ -50,7 +49,7 @@ export default function Figure(props: any) {
           className={`${
             answered ? "" : "hidden"
           }  bg-emerald-500 rounded-full`}
-          src="https://s3.amazonaws.com/media.wikiaves.com.br/images/2583/3852244g_d6cc844d83c3a936626a0f4a3924a33b.jpg"
+          src={"/"+url}
         ></img>
       </div>
 

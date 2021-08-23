@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, ReactNode } from "react";
-import type { User, Species, Sounds, Deck } from "../types";
+import type { User, Species, Sounds, Deck, Image } from "../types";
 import { Howl, Howler } from "howler";
 import { url } from "inspector";
 import Options from "../components/game/options";
@@ -68,12 +68,14 @@ export const Context = createContext<contextType | null>(null);
 interface SoundList extends Sounds {
   species_id: number;
   random: number;
+  image:Image
 }
 
 export interface StateSpecies extends Species {
   deck_id: number;
   sounds: Sounds[];
   points: number;
+  img: Image[];
 }
 
 // user info
@@ -167,7 +169,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
         .map((spp) =>
           spp.sounds
             .map((snd) => {
-              return { ...snd, species_id: spp.id, random: Math.random() };
+              return { ...snd,image:spp.img[0], species_id: spp.id, random: Math.random() };
             })
             .flat()
         )

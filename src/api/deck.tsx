@@ -10,6 +10,10 @@ const get_spp = gql`
           genus
           species
           pt_common_name
+          img{
+            author
+            url
+          }
           sounds {
             species_id
             author
