@@ -11,7 +11,7 @@ function App() {
     <Auth0Provider
     domain="dev-skphwm08.us.auth0.com"
     clientId="5AkjixQWOlv1FQpzboje929M5eJepDDP"
-    redirectUri={window.location.origin}
+    redirectUri={`${window.location.origin}/login`}
   >
 
     

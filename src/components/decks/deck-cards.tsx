@@ -9,7 +9,7 @@ const getScore = (spp: Species[]): number[] =>
 
 const nameMaker = (name: string) => {
   switch (name) {
-    case "common":
+    case "common_mantiqueira":
       return "Espécies comuns";
 
     case "medium":
@@ -21,13 +21,13 @@ const nameMaker = (name: string) => {
 
 function DeckCard(props: Deck & { setdeckID?: (id: number) => void }) {
   const [showSpecies, setShowSpecies] = useState(false);
-  const { id, name, spp, active, setdeckID } = props;
+  const { id, type, spp, active, setdeckID } = props;
   console.log(id);
   const percentage_complete =
     spp.length > 0 ? Math.round(scorePercentage(getScore(spp), 5, 0)) : 0;
   return (
     <div className="bg-gray-100 rounded-lg m-4 p-8 flex flex-col shadow-lg">
-      <h1 className="font-bold text-xl sm:text-2xl">{nameMaker(name)}</h1>
+      <h1 className="font-bold text-xl sm:text-2xl">{nameMaker(type)}</h1>
       <div className="relative pt-1">
         <div className="overflow-hidden h-4 mt-4 text-xs flex rounded bg-gray-500 ">
           <div

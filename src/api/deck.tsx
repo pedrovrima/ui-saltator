@@ -1,16 +1,16 @@
 import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
 
 const get_spp = gql`
-  query deck($id: ID!) {
-    RandomDeck(id: $id, total: 1) {
-      deck_species {
-        id
+  query deck($id: [ID]!) {
+    RandomDeck(id: $id, total: 5) {
+      id
+      species_deck {
         species {
           id
           genus
           species
           pt_common_name
-          img{
+          image {
             author
             url
           }
@@ -20,10 +20,12 @@ const get_spp = gql`
             xeno_id
           }
         }
+      }
         score
       }
     }
-  }
+    
+  
 `;
 
 const client = new ApolloClient({
@@ -31,18 +33,23 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-export default async function GetSpp(id: number) {
-  console.log(client)
-  const result = await client.query({ query: get_spp, variables: { id } });
+export default async function GetSpp(id: number[]) {
+  console.log(client);
+  try{
+  const result = await client.query({ query: get_spp, variables: { id } })
   console.log(result);
-  const deck_spp = result.data.RandomDeck.deck_species.map((spp: any) => {
+  const deck_spp = result.data.RandomDeck.map((spp: any) => {
     return {
-      deck_id:spp.id,
+      deck_id: spp.id,
       ...spp,
-      ...spp.species,
+      ...spp.species_deck.species,
       points: 0,
     };
   });
   console.log(deck_spp);
   return deck_spp;
+  }catch(err){
+    console.log(err)
+  }
+  
 }

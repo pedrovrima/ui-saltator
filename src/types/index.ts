@@ -1,9 +1,10 @@
 export type Species = {
+  deck_id?: number
   id: number;
   genus: string;
   species: string;
   pt_common_name?: string;
-  img?: Image[];
+  image?: Image[];
   score: number;
   points?: number;
   sounds?: Sounds[];
@@ -31,7 +32,7 @@ export type Sounds = {
 
 export type Deck = {
   id: number;
-  name: string;
+  type: string;
   spp: Species[];
   active: boolean;
 };

@@ -7,8 +7,8 @@ import type { User } from "../../types";
 export default function DeckChooser() {
   const { userInfo, setdeckID } = useContext(Context) as contextType;
   const { user_decks } = userInfo as User;
-  const rare = user_decks.filter((deck) => deck.name === "rare");
-  const medium = user_decks.filter((deck) => deck.name === "medium");
+  const rare = user_decks.filter((deck) => deck.type === "rare");
+  const medium = user_decks.filter((deck) => deck.type === "medium");
   return (
     <div className="w-full min-h-screen bg-emerald-700 flex flex-col justify-center items-center">
 
@@ -22,13 +22,13 @@ export default function DeckChooser() {
         })}
 
         {medium.length === 0 ? (
-          <DeckCard id={0} active={false} name="medium" spp={[]} />
+          <DeckCard id={0} active={false} type="medium" spp={[]} />
         ) : (
           ""
         )}
 
         {rare.length === 0 ? (
-          <DeckCard id={0} active={false} name="rare" spp={[]} />
+          <DeckCard id={0} active={false} type="rare" spp={[]} />
         ) : (
           ""
         )}

@@ -13,7 +13,7 @@ export default function Loading() {
 
 
   useEffect(()=>{
-    setPercentage(percentage_complete+(loaded_sounds)*20)
+    setPercentage(percentage_complete+(loaded_sounds)*10)
 
   },[loaded_sounds])
 

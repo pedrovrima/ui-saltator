@@ -60,7 +60,7 @@ export type contextType = {
   setPlayed: (num: number) => void;
   this_deck?: Deck;
   options?: OptionGroups;
-  setUserId: (id: number) => void;
+  setUserId: (id: string) => void;
 };
 
 export const Context = createContext<contextType | null>(null);
@@ -68,14 +68,14 @@ export const Context = createContext<contextType | null>(null);
 interface SoundList extends Sounds {
   species_id: number;
   random: number;
-  image:Image
+  image: Image;
 }
 
 export interface StateSpecies extends Species {
   deck_id: number;
   sounds: Sounds[];
   points: number;
-  img: Image[];
+  image: Image[];
 }
 
 // user info
@@ -89,24 +89,23 @@ const createHowl = (
   // sound.crossOrigin="anonymous";
   // sound.src=this_url;
   // console.log(this_url);
-  
-  const sound =  new Howl({
-    html5:false,
+
+  const sound = new Howl({
+    html5: false,
     src: [this_url],
     onload: () => {
       setLoadedSounds(loaded_sounds + 1);
     },
   });
 
-  console.log(this_url)
-  // setLoadedSounds(loaded_sounds + 1)  
-
+  console.log(this_url);
+  // setLoadedSounds(loaded_sounds + 1)
 
   return sound;
 };
 
 export const ContextProvider = (props: { children: ReactNode }) => {
-  const [userId, setUserId] = useState<number>();
+  const [userId, setUserId] = useState<string>();
   const [userInfo, setUserInfo] = useState<User>();
   const [deckID, setdeckID] = useState<number>();
   const [studySpp, setStudySpp] = useState<StateSpecies[]>();
@@ -126,7 +125,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     }
   };
 
-  const userSetter = async (id: number) => {
+  const userSetter = async (id: string) => {
     const user = await getUser(id);
     console.log(user);
     setUserInfo(user);
@@ -146,21 +145,26 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     }
   }, [total_played]);
 
-  const sppSetter = async (id:number) => {
-    console.log("here")
+  const sppSetter = async (id: number[]) => {
+    console.log("here");
     const spp = await getSpp(id);
-    console.log(spp)
+    console.log(spp);
     setStudySpp(spp);
   };
 
   useEffect(() => {
-    if(deckID){
-      console.log("here")
-    sppSetter(deckID);
-    const use_deck = userInfo?.user_decks?.filter(
-      (deck) => deck.id === deckID
-    )[0];
-    setThisDeck(use_deck);}
+    console.log(deckID)
+    if (deckID) {
+      const use_deck = userInfo?.user_decks?.filter(
+        (deck) => deck.id === deckID
+      )[0];
+      console.log(use_deck);
+      if (use_deck) {
+        sppSetter(use_deck.spp.map((spp) => spp.deck_id?spp.deck_id:0));
+
+        setThisDeck(use_deck);
+      }
+    }
   }, [deckID]);
 
   useEffect(() => {
@@ -169,7 +173,12 @@ export const ContextProvider = (props: { children: ReactNode }) => {
         .map((spp) =>
           spp.sounds
             .map((snd) => {
-              return { ...snd,image:spp.img[0], species_id: spp.id, random: Math.random() };
+              return {
+                ...snd,
+                image: spp.image[0],
+                species_id: spp.id,
+                random: Math.random(),
+              };
             })
             .flat()
         )
@@ -197,7 +206,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
   useEffect(() => {
     if (songOrder && this_deck && !options) {
       const the_options: OptionGroups = songOrder.map((sng, i): OptionsType => {
-        console.log(sng)
+        console.log(sng);
         const options = createOptions(sng.species_id, this_deck.spp);
         // console.log(options[0], sng.species_id, i);
         return options;
