@@ -36,7 +36,7 @@ export const SaltatorRouter = () => {
           )}{" "}
         </Route>
         <Route path="/loading">
-          {loaded_sounds===songOrder?.length ||  loaded_sounds > 4 ? <Redirect to="/game" /> : <Loading />}
+          {loaded_sounds===songOrder?.length ||  loaded_sounds > 5 ? <Redirect to="/game" /> : <Loading />}
         </Route>
         <Route path="/game">
           {total_played === songOrder?.length ?<Redirect to="/end" />  : <Game />}
