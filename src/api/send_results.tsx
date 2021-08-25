@@ -10,7 +10,7 @@ const get_spp = gql`
 `;
 
 const client = new ApolloClient({
-  uri: "http://localhost:4001/graphql",
+  uri: "/graphql",
   cache: new InMemoryCache(),
 });
 

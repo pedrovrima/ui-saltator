@@ -23,7 +23,7 @@ const createOptions = (this_id: number, spp_list: Species[]): OptionsType => {
   const spp = spp_list.reduce(
     (data: any, spp: Species) => {
       if (spp.id === this_id) {
-        return { ...data, this_species: { ...spp, correct: true } };
+        return { ...data, this_species: { ...spp, correct: true,random: Math.random() } };
       }
       return {
         ...data,
@@ -40,9 +40,9 @@ const createOptions = (this_id: number, spp_list: Species[]): OptionsType => {
     .sort((a: other_species, b: other_species): number => a.random - b.random)
     .splice(0, 2);
 
-  console.log(spp.this_species);
 
-  return [spp.this_species, ...selected_species];
+  return [spp.this_species, ...selected_species].sort((a: other_species, b: other_species): number => a.random - b.random)
+  ;
 };
 
 export type contextType = {
