@@ -1,10 +1,13 @@
 import {Species} from "../../types";
 import {MdStar,MdStarBorder} from "react-icons/md"
 
+
 type speciesListProps = {
     spp:Species[]
     visible: boolean
 }
+
+
 
 const StarScore = (props:{total:number,score:number}) =>{
   const {total,score} = props

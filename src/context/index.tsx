@@ -7,6 +7,7 @@ import getUser from "../api/user";
 import getSpp from "../api/deck";
 type random = {
   random: number;
+  second_random: number;
 };
 type other_species = Species & random;
 
@@ -23,13 +24,21 @@ const createOptions = (this_id: number, spp_list: Species[]): OptionsType => {
   const spp = spp_list.reduce(
     (data: any, spp: Species) => {
       if (spp.id === this_id) {
-        return { ...data, this_species: { ...spp, correct: true,random: Math.random() } };
+        return {
+          ...data,
+          this_species: { ...spp, correct: true, second_random: Math.random() },
+        };
       }
       return {
         ...data,
         other_species: [
           ...data.other_species,
-          { ...spp, random: Math.random(), correct: false },
+          {
+            ...spp,
+            random: Math.random(),
+            second_random: Math.random(),
+            correct: false,
+          },
         ],
       };
     },
@@ -40,14 +49,15 @@ const createOptions = (this_id: number, spp_list: Species[]): OptionsType => {
     .sort((a: other_species, b: other_species): number => a.random - b.random)
     .splice(0, 2);
 
-
-  return [spp.this_species, ...selected_species].sort((a: other_species, b: other_species): number => a.random - b.random)
-  ;
+  return [spp.this_species, ...selected_species].sort(
+    (a: other_species, b: other_species): number =>
+      a.second_random - b.second_random
+  );
 };
 
 export type contextType = {
   deckID?: number;
-  setdeckID: (id: number) => void;
+  setdeckID: (id: number | undefined) => void;
   addPoints: (spp_id: number, points: number) => void;
   setUserInfo: (user: User) => void;
   userInfo?: User;
@@ -61,6 +71,10 @@ export type contextType = {
   this_deck?: Deck;
   options?: OptionGroups;
   setUserId: (id: string) => void;
+  setOptions: (opt: OptionGroups) => void;
+  setSounds: (snd: any) => void;
+  setLoadedSounds: (num: number) => void;
+  setSongOrder: (sng: SoundList[]) => void;
 };
 
 export const Context = createContext<contextType | null>(null);
@@ -107,7 +121,7 @@ const createHowl = (
 export const ContextProvider = (props: { children: ReactNode }) => {
   const [userId, setUserId] = useState<string>();
   const [userInfo, setUserInfo] = useState<User>();
-  const [deckID, setdeckID] = useState<number>();
+  const [deckID, setdeckID] = useState<number | undefined>();
   const [studySpp, setStudySpp] = useState<StateSpecies[]>();
   const [songOrder, setSongOrder] = useState<SoundList[]>();
   const [sounds, setSounds] = useState<any[]>();
@@ -153,14 +167,14 @@ export const ContextProvider = (props: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    console.log(deckID)
+    console.log(deckID);
     if (deckID) {
       const use_deck = userInfo?.user_decks?.filter(
         (deck) => deck.id === deckID
       )[0];
       console.log(use_deck);
       if (use_deck) {
-        sppSetter(use_deck.spp.map((spp) => spp.deck_id?spp.deck_id:0));
+        sppSetter(use_deck.spp.map((spp) => (spp.deck_id ? spp.deck_id : 0)));
 
         setThisDeck(use_deck);
       }
@@ -232,6 +246,10 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     this_deck,
     options,
     setUserId,
+    setOptions,
+    setSounds,
+    setLoadedSounds,
+    setSongOrder,
   };
   return <Context.Provider value={value}>{props.children}</Context.Provider>;
 };
