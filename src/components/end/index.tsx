@@ -6,6 +6,7 @@ import { send } from "process";
 import { MdStar, MdStarBorder } from "react-icons/md";
 import { scorePercentage } from "../../help-functions/scorePercentage";
 import { Link } from "react-router-dom";
+import ReactGA from "react-ga";
 
 const getScore = (spp: newSpp[]): number[] =>
   spp.map((species: newSpp): number => species.new_score || species.score);
@@ -121,7 +122,7 @@ export default function End() {
         </div>
       ) : (
         <div className="flex items-center text-center justify-center">
-        <p className="text-2xl font-bold">Enviando resultados</p>
+          <p className="text-2xl font-bold">Enviando resultados</p>
         </div>
       )}{" "}
     </div>
@@ -188,9 +189,14 @@ const SpeciesList = (props: any) => {
 const OAMaBanner = () => (
   <div className="flex flex-col justify-center items-center bg-amber-200 p-8">
     <div className="h-sm w-sm mb-2">
-      <a target="_blank" href="https://www.oama.eco.br">
-        <img src="/logo_oama"></img>
-      </a>
+      <ReactGA.OutboundLink
+        eventLabel="siteOAMa"
+        rel="noreferrer"
+        target="_blank"
+        to="https://www.oama.eco.br"
+      >
+        <img src="/logo_oama.png"></img>
+      </ReactGA.OutboundLink>
     </div>
     <h1 className="font-medium text-md">
       Este aplicativo foi criado e é mantido pelo
@@ -198,14 +204,14 @@ const OAMaBanner = () => (
     <h2 className="font-bold text-center text-xl">
       Observatório de Aves da Mantiqueira
     </h2>
-
-    <a
+    <ReactGA.OutboundLink
+      eventLabel="goto-apoie"
       target="_blank"
       rel="noreferrer"
-      href="https://www.oama.eco.br/apoie"
+      to="https://www.oama.eco.br/apoie"
       className="py-2 px-4 bg-amber-600 rounded-lg font-bold mt-4 text-gray-100"
     >
       Apoie
-    </a>
+    </ReactGA.OutboundLink>
   </div>
 );

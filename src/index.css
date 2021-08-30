@@ -42,6 +42,10 @@ code {
     rgba(0, 0, 0, 0.5) 100%
   );
 }
+
+.gradient {
+  background: linear-gradient(90deg, #ffc400 30%, #daae51 100%);
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
