@@ -29,7 +29,7 @@ export default function Game() {
     <>
       <div
         style={{
-          backgroundImage: `url("https://www.suaaventura.com.br/wp-content/uploads/2018/10/Pedra-do-Altar_Web-2206-2-Copy-1024x683.jpg")`,
+          backgroundImage: `url("/bg.jpg")`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}

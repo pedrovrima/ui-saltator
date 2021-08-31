@@ -8,9 +8,10 @@ type speciesListProps = {
 
 const StarScore = (props: { total: number; pre_score: number }) => {
   const { total, pre_score } = props;
-  const score = pre_score>4?5:pre_score
+  const score = pre_score>5?5:pre_score
   const full_stars = Array.from(Array(score)).map(() => "");
   const empty_stars = Array.from(Array(total - score)).map(() => "");
+  console.log(empty_stars)
   return (
     <div className="flex ">
       {full_stars.map((f) => (
@@ -34,7 +35,7 @@ const SpeciesList = (props: speciesListProps) => {
               <h1 className="text-lg font-bold mb-0 p-0">{`${species.pt_common_name}`}</h1>
 
               <h2 className="italic">{`${species.genus} ${species.species}`}</h2>
-              {species.score ? (
+              {species.score+1 ? (
                 <StarScore pre_score={species.score} total={5}></StarScore>
               ) : (
                 ""

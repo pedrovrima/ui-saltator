@@ -20,9 +20,10 @@ type score = {
 };
 
 export default async function sendScore(scoreInfo: score[]) {
+ const sendInfo= scoreInfo.filter(scr=>scr.score<6)
   const result = await client.mutate({
     mutation: get_spp,
-    variables: { infos: scoreInfo },
+    variables: { infos: sendInfo },
   });
   console.log(result);
   return result.data.updateScore.status;

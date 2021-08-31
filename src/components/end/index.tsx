@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 import ReactGA from "react-ga";
 
 const getScore = (spp: newSpp[]): number[] =>
-  spp.map((species: newSpp): number => species.new_score || species.score);
+  spp.map((species: newSpp): number =>
+    species.new_score + 1 ? species.new_score : species.score
+  );
 
 interface newSpp extends StateSpecies {
   new_score: number;
@@ -33,7 +35,11 @@ const createPoints = (spps: StateSpecies[]) => {
 };
 
 const getScores = (spp: newSpp) => {
-  return { id: spp.deck_id, score: spp.new_score };
+  if (spp.new_score < 6) {
+    return { id: spp.deck_id, score: spp.new_score };
+  } else {
+    return { id: spp.deck_id, score: spp.score };
+  }
 };
 
 export default function End() {
@@ -43,6 +49,7 @@ export default function End() {
     deckID,
     studySpp,
     userInfo,
+    this_deck,
     setLoadedSounds,
     setSongOrder,
     setStudySpp,
@@ -66,17 +73,17 @@ export default function End() {
   const sendResu = async () => {
     if (studySpp) {
       const newP = createPoints(studySpp);
-      const scores = newP.map((spp) => getScores(spp));
+      const scores = newP
+        .map((spp) => getScores(spp))
+        .sort((a: any, b: any) => a.new_score - b.new_score);
       const status = await sendScore(scores);
-      console.log(status);
+      console.log(newP);
       setStatus(status);
 
-
-
       const newpIds = newP.map((spp) => spp.id);
-      const oldSpp = userInfo?.user_decks.filter(d=>d.id===deckID)[0].spp.filter(
-        (sp) => newpIds.indexOf(sp.id) < 0
-      );
+      const oldSpp = userInfo?.user_decks
+        .filter((d) => d.id === deckID)[0]
+        .spp.filter((sp) => newpIds.indexOf(sp.id) < 0);
       if (oldSpp) {
         setFinalScore([...newP, ...oldSpp]);
       }
@@ -131,10 +138,13 @@ export default function End() {
   );
 }
 
-const StarScore = (props: { total: number; score: number }) => {
-  const { total, score } = props;
+const StarScore = (props: { total: number; pre_score: number }) => {
+  const { total, pre_score } = props;
+  console.log(pre_score);
+  const score = pre_score > 5 ? 5 : pre_score;
   const full_stars = Array.from(Array(score)).map(() => "");
   const empty_stars = Array.from(Array(total - score)).map(() => "");
+  console.log(full_stars, empty_stars);
   return (
     <div className="flex ">
       {full_stars.map((f) => (
@@ -163,12 +173,16 @@ const SpeciesList = (props: any) => {
 
                 <h2 className="italic text-sm">{`${species.genus} ${species.species}`}</h2>
                 <StarScore
-                  score={species.new_score || species.score}
+                  pre_score={
+                    species.new_score + 1 ? species.new_score : species.score
+                  }
                   total={5}
                 ></StarScore>
               </div>
               <div className="flex items-center text-xl font-bold ">
-                {species.new_score ? (
+                {species.new_score+1 &&
+                species.new_score < 6 &&
+                species.score < 6 ? (
                   species.new_score > species.score ? (
                     <p className="text-green-700">+1</p>
                   ) : species.new_score < species.score ? (
