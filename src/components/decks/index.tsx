@@ -18,8 +18,9 @@ export default function DeckChooser() {
   // const rare = user_decks.filter((deck) => deck.type === "rare");
   // const medium = user_decks.filter((deck) => deck.type === "medium");
   return (
-    <div className="w-full min-h-screen bg-emerald-700 flex flex-col justify-center items-center">
-      <div className="bg-gray-200 mt-8 pb-8 w-full p-4 rounded-lg sm:w-3/4 sm:p-8  shadow-lg">
+    <div style={{backgroundImage:"url(/bg2.jpg",backgroundPosition:"top",backgroundSize:"cover" }} className="w-full min-h-screen bg-emerald-700 flex flex-col justify-center items-center">
+      <div             style={{backgroundColor: "rgba(228, 228, 231, 0.8)"}}
+ className="mx-2 mt-8 mb-2 pb-8 w- p-4 rounded-lg sm:w-3/4 sm:p-8  shadow-lg">
         <h1 className="text-center text-3xl font-bold mb-2">
           Escolha um deck para estudar
         </h1>

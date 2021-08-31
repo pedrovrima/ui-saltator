@@ -43,7 +43,7 @@ export default function Game() {
         >
           <Counter total={songOrder.length} this_position={total_played + 1} />
           {songOrder.map((snd: any, i: number) => (
-            <GamePart position={i} />
+            <GamePart key={i} position={i} />
           ))}
         </div>
       </div>
