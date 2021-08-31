@@ -33,13 +33,13 @@ export default function Game() {
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}
-        className="w-full p-2 flex justify-center items-center sm:p-8 bg-emerald-900 min-h-screen"
+        className="w-full p-2 flex justify-center items-start sm:p-8 bg-emerald-900 min-h-screen"
       >
         <div
           style={{
             backgroundColor: "rgba(228, 228, 231, 0.9)",
           }}
-          className="  w-full p-4 sm:p-16 rounded-lg sm:w-4/5  z-10  backdrop-blur-2xl shadow-lg"
+          className="  w-full p-2 sm:p-16 rounded-lg sm:w-11/12 lg:w-5/6  z-10 sm:h-3/4  backdrop-blur-2xl shadow-lg"
         >
           <Counter total={songOrder.length} this_position={total_played + 1} />
           {songOrder.map((snd: any, i: number) => (

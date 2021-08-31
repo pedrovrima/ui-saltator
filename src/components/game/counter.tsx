@@ -8,7 +8,7 @@ const Counter = (props: counterType) => {
 
   return (
     <div className="w-full flex justify-center">
-      <p className="text-lg font-bold">{`${this_position}/${total}`}</p>
+      <p className="text-sm sm:text-lg font-bold">{`${this_position}/${total}`}</p>
     </div>
   );
 };

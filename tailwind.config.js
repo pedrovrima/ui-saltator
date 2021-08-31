@@ -5,6 +5,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      maxHeight:{"qscreen":"80vh"},
       height: { qscreen: "90vh" },
       colors: { emerald: colors.emerald, gray: colors.gray, red: colors.red,amber: colors.amber },
     },

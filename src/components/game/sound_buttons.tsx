@@ -22,9 +22,9 @@ export default function SoundButtons(props: any) {
           }}
         >
           {!playing ? (
-            <MdPlayArrow className="w-8 h-8"></MdPlayArrow>
+            <MdPlayArrow className="w-6 h-6 sm:w-8 sm:h-8"></MdPlayArrow>
           ) : (
-            <MdPause className="w-8 h-8"></MdPause>
+            <MdPause className="w-6 h-6 sm:w-8 sm:h-8"></MdPause>
           )}
         </button>
         <button
@@ -34,7 +34,7 @@ export default function SoundButtons(props: any) {
             setPlaying(true);
           }}
         >
-          <MdReplay className="w-7 h-7"></MdReplay>
+          <MdReplay className="w-5 h-5 sm:w-7 sm:h-7"></MdReplay>
         </button>
       </div>
     </>

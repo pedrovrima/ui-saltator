@@ -43,7 +43,7 @@ console.log(url)
           <path d={path} fill="blue"></path>
         </svg>
       </div> */}
-      <div className=" w-36 h-36  lg:h-64 lg:w-64 z-10 bg-emerald-500 rounded-full">
+      <div className=" w-32 h-32  md:h-64 md:w-64 z-10 bg-gray-500 rounded-full">
         <img
           alt="img"
           className={`${

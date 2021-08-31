@@ -71,8 +71,10 @@ export default function End() {
       console.log(status);
       setStatus(status);
 
+
+
       const newpIds = newP.map((spp) => spp.id);
-      const oldSpp = userInfo?.user_decks[0].spp.filter(
+      const oldSpp = userInfo?.user_decks.filter(d=>d.id===deckID)[0].spp.filter(
         (sp) => newpIds.indexOf(sp.id) < 0
       );
       if (oldSpp) {
@@ -195,7 +197,7 @@ const OAMaBanner = () => (
         target="_blank"
         to="https://www.oama.eco.br"
       >
-        <img src="/logo_oama.png"></img>
+        <img className="h-24 w-24" src="/logo_oama.png"></img>
       </ReactGA.OutboundLink>
     </div>
     <h1 className="font-medium text-md">

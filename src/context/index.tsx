@@ -159,7 +159,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
     }
   }, [total_played]);
 
-  const sppSetter = async (id: number[]) => {
+  const sppSetter = async (id: number) => {
     console.log("here");
     const spp = await getSpp(id);
     console.log(spp);
@@ -174,7 +174,7 @@ export const ContextProvider = (props: { children: ReactNode }) => {
       )[0];
       console.log(use_deck);
       if (use_deck) {
-        sppSetter(use_deck.spp.map((spp) => (spp.deck_id ? spp.deck_id : 0)));
+        sppSetter(deckID);
 
         setThisDeck(use_deck);
       }

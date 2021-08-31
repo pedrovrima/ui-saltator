@@ -32,7 +32,22 @@ export type Sounds = {
 
 export type Deck = {
   id: number;
-  type: string;
+  
   spp: Species[];
   active: boolean;
+  deckType: deckType;
 };
+
+export type deckType = {
+  id: number;
+  type:string;
+  name: string;
+  deckGroup: deckGroups;
+}
+
+
+export type deckGroups={
+  id: number;
+  name: string;
+  deckTypes: deckType[];
+}

@@ -36,7 +36,7 @@ const OptionComponent = (props: optionComponentType) => {
       data-testid={`${genus} ${species}`}
       key={`${genus} ${species}`}
       disabled={answered}
-      className={` ${answered && correct?"bg-emerald-300":answered && chosen?"bg-red-300":`bg-gray-50`} p-4  mt-2 sm:my-2  shadow-lg rounded-lg w-full `}
+      className={` ${answered && correct?"bg-emerald-300":answered && chosen?"bg-red-300":`bg-gray-50`} p-2 sm:p-4  mt-2 sm:my-2  shadow-lg rounded-lg w-full `}
       onClick={() => {
         setChosen(true);
         setAnswered(true);

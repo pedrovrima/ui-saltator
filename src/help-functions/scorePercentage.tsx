@@ -7,7 +7,7 @@ const scorePercentage = (
 ) => {
   return (
     (100 * sumArray(score.map((scr) => scr - minScore))) /
-    (score.length * (maxScore - 1))
+    (score.length * (maxScore ))
   );
 };
 
